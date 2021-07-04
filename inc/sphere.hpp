@@ -10,11 +10,11 @@ class Sphere : public Hittable {
 		Vec3 dispFactor;
 
 	public:
-		Sphere(Vec3 c, float r) : Hittable(SPHERE), center(c), radius(r), dispFactor{1.0f} {}
+		Sphere(Vec3 c, float r) : Hittable(SPHERE), center(c), radius(r), dispFactor{0.0f} {}
 		Sphere(Vec3 c, float r, Vec3 disp) : Hittable(SPHERE), center(c), radius(r), dispFactor(disp){}
 		virtual float SDF (Vec3 p) const {
 			Vec3 tmp = p - center;
-			float disp = sin(dispFactor.x*tmp.x)*sin(dispFactor.y*tmp.y)*sin(dispFactor.z*tmp.z);
+			float disp = sin(dispFactor.x*p.x)*sin(dispFactor.y*p.y)*sin(dispFactor.z*p.z);
 			return (tmp.length() - radius) + disp;
 		}
 };

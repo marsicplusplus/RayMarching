@@ -3,6 +3,7 @@
 
 #include "camera.hpp"
 #include "hittable.hpp"
+#include "sphere.hpp"
 #include <vector>
 
 typedef struct {
@@ -23,6 +24,9 @@ class World {
 		float mapWorld(Vec3 v) const;
 		Vec3 calcLights(Vec3 &v, Vec3 &normal) const;
 		void update();
+
+	private:
+		Sphere sphere;
 };
 
 #endif

@@ -1,13 +1,11 @@
 #include <limits>
 #include "cube.hpp"
+#include <ctime>
 #include "sphere.hpp"
 #include "world.hpp"
 
-World::World() {
-	hittables.push_back(std::make_unique<Sphere>(Vec3(0.0f, 0.0f, -2.0f), 0.2f));
-	hittables.push_back(std::make_unique<Sphere>(Vec3(-0.3f, -0.3f, -1.7f), 0.2f));
-	hittables.push_back(std::make_unique<Sphere>(Vec3(0.3f, 0.3f, -1.3f), 0.2f));
-	hittables.push_back(std::make_unique<Cube>(Vec3(0.0f, 0.0f, -4.0f), Vec3(0.5, 0.5, 0.5)));
+World::World():sphere(Vec3(0.0f, 0.0f, -2.0f), 1.0f) {
+	//hittables.push_back(std::make_unique<Sphere>(Vec3(0.0f, 0.0f, -2.0f), 1.0f));
 	lights.push_back(Light{Vec3(4.0f, 0.0f, -1.0), Vec3(0.3, 0.3, 0.4)});
 	lights.push_back(Light{Vec3(-4.0f, 4.0f, -2.0), Vec3(0.3, 0.3, 0.3)});
 	lights.push_back(Light{Vec3(0.0f, 4.0f, 1.0), Vec3(0.3, 0.3, 0.2)});
@@ -16,11 +14,12 @@ World::World() {
 }
 
 float World::mapWorld(Vec3 v) const {
-	float minSDF = std::numeric_limits<float>::max();
-	for(auto &o : hittables){
-		minSDF = std::min(o->SDF(v), minSDF);
-	}
-	return minSDF;
+	//float minSDF = std::numeric_limits<float>::max();
+	//for(auto &o : hittables){
+		//minSDF = std::min(o->SDF(v), minSDF);
+	//}
+	//return minSDF;
+	return sphere.SDF(v);
 }
 
 Vec3 World::calcLights(Vec3 &v, Vec3 &normal) const {
@@ -41,12 +40,5 @@ Vec3 World::calcLights(Vec3 &v, Vec3 &normal) const {
 }
 
 void World::update() {
-	for(auto &h : hittables){
-		if(h->type == CUBE){
-			(dynamic_cast<Cube&>(*h)).center = Vec3(0.1f) + (dynamic_cast<Cube&>(*h)).center;
-		}
-		if(h->type == SPHERE){
-			(dynamic_cast<Sphere&>(*h)).dispFactor= Vec3(0.1f, 0.4f, 0.5f) + (dynamic_cast<Sphere&>(*h)).dispFactor;
-		}
-	}
+	sphere.dispFactor = sphere.dispFactor + Vec3(0.11f, 0.08f, 0.02f);
 }

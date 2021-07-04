@@ -20,7 +20,7 @@ int main() {
 	float ratio = imgW / (float)imgH;
 	const int samplings = 8;
 	Options opt {
-		imgW, imgH, fov, samplings, minDistance, maxDistance, scale, ratio, 30*6, "render"
+		imgW, imgH, fov, samplings, minDistance, maxDistance, scale, ratio, 24*10, "render"
 	};
 
 	std::vector<Vec3> frameBuffer(imgH * imgW);
